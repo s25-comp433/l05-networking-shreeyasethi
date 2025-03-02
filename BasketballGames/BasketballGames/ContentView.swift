@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Score: Codable{
+struct Score: Codable {
     var opponent: Int
     var unc: Int
 }
@@ -21,13 +21,12 @@ struct Game: Codable {
     var team: String
 }
 
-
 struct ContentView: View {
     @State private var games = [Game]()
     
     var body: some View {
         List(games, id: \.id) { game in
-            HStack{
+            HStack {
                 VStack(alignment: .leading) {
                     Text("\(game.team) vs. \(game.opponent)")
                         .font(.headline)
@@ -44,19 +43,19 @@ struct ContentView: View {
                         .font(.caption)
                         .foregroundColor(game.isHomeGame ? .green : .red)
                 }
-                
             }
-           .padding()
-       }
-       .task {
-           await loadData()
-       }
-   }
+            .padding()
+        }
+        .task {
+            await loadData()
+        }
+    }
+
     func loadData() async {
-            guard let url = URL(string: "https://api.samuelshi.com/uncbasketball") else {
-                print("Invalid URL")
-                return
-            }
+        guard let url = URL(string: "https://api.samuelshi.com/uncbasketball") else {
+            print("Invalid URL")
+            return
+        }
     
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -69,7 +68,6 @@ struct ContentView: View {
     }
 }
                     
-
 #Preview {
     ContentView()
 }
